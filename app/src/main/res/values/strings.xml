@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">cs422Layne</string>
+    <string name="app_name">Layne</string>
     <string name="title_activity_maps">Map</string>
+    <string name="location_permission_denied">Layne requires location permission to enable the app. Please try again and grant access to use the location.\nIf the permission has been permanently denied, it can be enabled from the System Settings &gt; Apps &gt; \'Layne\' > Permissions.</string>
+    <string name="permission_required_toast">Location permission is required for the use of Layne.</string>
+
 </resources>
