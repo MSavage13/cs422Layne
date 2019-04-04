@@ -1,5 +1,6 @@
 package com.example.cs422layne;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.annotation.NonNull;
@@ -7,8 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -27,6 +30,7 @@ public class DestinationInputActivity extends AppCompatActivity implements Googl
     private AutoCompleteTextView startDestination;
     private AutoCompleteTextView endDestination;
     private PlaceAutocompleteAdapter placeAutocompleteAdapter;
+    private View nextButton;
     //private GoogleApiClient googleApiClient;
 
     private static final String TAG = DestinationInputActivity.class.getSimpleName();
@@ -37,6 +41,15 @@ public class DestinationInputActivity extends AppCompatActivity implements Googl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.destination_input_layout);
+
+        nextButton = findViewById(R.id.next_bike);
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(DestinationInputActivity.this, RecommendedRoutes.class));
+            }
+        });
 
         /*
         googleApiClient = new GoogleApiClient

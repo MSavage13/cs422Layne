@@ -16,5 +16,7 @@
     <string name="Want_to_start">Want to start your ride? \n\t-tap on the map or \n   hit Go!</string>
     <string name="Want_to_place">Want to place a marker?\n\t   -tap and hold, this\n   opens up a radial\n   menu where you can\n   slide your fingers to\n   each sub-menu</string>
     <string name="Want_this_tut">Want this tutorial again?\n\t   -tap the ? in the\n   top right!</string>
+    <string name="Ellipses">&#8942;</string>
+    <string name="routeOverview">Route Overview</string>
 
 </resources>
