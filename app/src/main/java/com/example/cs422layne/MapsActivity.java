@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.location.Location;
@@ -14,6 +15,8 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -37,6 +40,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private GoogleMap mMap;
     private Boolean fineLocationPermissionGranted = true;
     private FusedLocationProviderClient fusedLocationProviderClient;
+    private Button goButton;
+    private Button helpButton;
+    private Button gotItButton;
+    private Button menuButton;
 
     private static final String TAG = MapsActivity.class.getSimpleName();
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -55,6 +62,46 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        goButton = (Button) findViewById(R.id.goButton);
+
+        goButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MapsActivity.this, DestinationInputActivity.class);
+                startActivity(i);
+            }
+        });
+
+        helpButton = (Button) findViewById(R.id.helpButton);
+
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View helpLayout = findViewById(R.id.help_layout);
+                helpLayout.setVisibility(View.VISIBLE);
+                goButton.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        gotItButton = (Button) findViewById(R.id.HelpGotItButton);
+        gotItButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View helpLayout = findViewById(R.id.help_layout);
+                helpLayout.setVisibility(View.INVISIBLE);
+                goButton.setVisibility(View.VISIBLE);
+            }
+        });
+
+        menuButton = (Button) findViewById(R.id.menuButton);
+
+        menuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MapsActivity.this, PreferencesActivity.class));
+            }
+        });
     }
 
     private void getDeviceLocation(){
@@ -65,7 +112,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
-                        if(task.isSuccessful()){
+                        if(task.isSuccessful() && task.getResult() != null){
                             Log.i(TAG, "onComplete: found location");
                             Location currentLocation = (Location) task.getResult();
                             moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()), DEFAULT_ZOOM);
@@ -112,8 +159,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         else if(mMap != null){
             mMap.setMyLocationEnabled(true);
             getDeviceLocation();
-            mMap.getUiSettings().setMyLocationButtonEnabled(true);
-            //mMap.getUiSettings().setCompassEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+            mMap.getUiSettings().setCompassEnabled(false);
             //mMap.getUiSettings().setMapToolbarEnabled(true);
         }
     }
